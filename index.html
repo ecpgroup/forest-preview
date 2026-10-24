@@ -1077,33 +1077,6 @@
         font-weight: 700;
         color: var(--ink2);
       }
-      .tbl-wrap {
-        overflow-x: auto;
-        border: 1.5px solid var(--ink);
-      }
-      .tbl {
-        width: 100%;
-        min-width: 640px;
-        border-collapse: collapse;
-        background: var(--paper);
-      }
-      .tbl th,
-      .tbl td {
-        text-align: left;
-        padding: 12px;
-        border-bottom: 1px solid var(--line);
-        font-size: 0.9rem;
-        vertical-align: top;
-      }
-      .tbl th {
-        font-size: 0.75rem;
-        color: var(--ink2);
-        font-family: var(--mono);
-        font-weight: 500;
-      }
-      .tbl small {
-        color: var(--ink2);
-      }
       .svc {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1344,7 +1317,6 @@
         <ul id="navList">
           <li><a href="#jisseki">施工実績</a></li>
           <li><a href="#jigyo">事業内容</a></li>
-          <li><a href="#kyoka">許可・資格</a></li>
           <li><a href="#company">会社案内</a></li>
           <li><a href="#access">アクセス</a></li>
           <li><a href="#faq">よくある質問</a></li>
@@ -1530,8 +1502,6 @@
             <dd>4,000万円</dd>
             <dt>事業内容</dt>
             <dd>林業土木(造成工事に伴う伐採工事)、調査業務</dd>
-            <dt>建設業許可</dt>
-            <dd>奈良県知事許可(般-1)第13167号<span class="tbd">要確認</span></dd>
             <dt>主な取引先</dt>
             <dd>
               大和ハウス工業(株)、鹿島建設(株)、(株)森組、(株)鴻池組(順不同)<span class="tbd">掲載可否 要確認</span>
@@ -1664,60 +1634,6 @@
       </section>
     </main>
 
-    <main class="page" id="page-kyoka" data-title="許可・資格" hidden>
-      <header class="p-hero">
-        <p class="crumb"><a href="#top">トップ</a> / 許可・資格</p>
-        <p class="kicker">LICENSE</p>
-        <h1 class="p-h1">許可・資格</h1>
-        <p class="lead">元請・発注者の皆さまの書類確認にお使いください。</p>
-      </header>
-      <section class="p-sec">
-        <h2 class="p-h2">許可・登録</h2>
-        <div class="tbl-wrap">
-          <table class="tbl">
-            <thead>
-              <tr>
-                <th>種類</th>
-                <th>許可者</th>
-                <th>番号</th>
-                <th>有効期限</th>
-                <th>許可証</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  建設業許可<br /><small>業種 <span class="tbd">要確認</span></small>
-                </td>
-                <td>奈良県知事</td>
-                <td>(般-1)第13167号 <span class="tbd">要確認</span></td>
-                <td><span class="tbd">要確認</span></td>
-                <td><span class="tbd">未受領</span></td>
-              </tr>
-              <tr>
-                <td>入札参加資格など</td>
-                <td><span class="tbd">要確認</span></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-      <section class="p-sec">
-        <h2 class="p-h2">保有資格(人数)</h2>
-        <p class="body">
-          <span class="tbd">要確認</span
-          >例:伐木等の業務(チェーンソー)特別教育、車両系建設機械、林業架線作業主任者、施工管理技士 など
-        </p>
-      </section>
-      <section class="p-sec">
-        <h2 class="p-h2">保険・安全</h2>
-        <p class="body"><span class="tbd">要確認</span>工事保険・賠償責任保険の加入、安全への取り組み</p>
-      </section>
-    </main>
-
     <main class="page" id="page-access" data-title="アクセス" hidden>
       <header class="p-hero">
         <p class="crumb"><a href="#top">トップ</a> / アクセス</p>
@@ -1837,8 +1753,8 @@
     <footer>
       <nav style="width: 100%; display: flex; flex-wrap: wrap; gap: 6px 18px; font-weight: 700">
         <a href="#top">トップ</a><a href="#jisseki">施工実績</a><a href="#jigyo">事業内容</a
-        ><a href="#kyoka">許可・資格</a><a href="#company">会社案内</a><a href="#access">アクセス</a
-        ><a href="#faq">よくある質問</a><a href="#otoiawase">お問い合わせ</a>
+        ><a href="#company">会社案内</a><a href="#access">アクセス</a><a href="#faq">よくある質問</a
+        ><a href="#otoiawase">お問い合わせ</a>
       </nav>
       <span>フォレスト総建株式会社|〒635-0817 奈良県北葛城郡広陵町寺戸550-3</span>
       <span>© ECPGROUP</span>
@@ -2219,7 +2135,7 @@
       })();
       /* ---------- 内部ページの切り替え ---------- */
       (() => {
-        const ROUTES = ["jisseki", "jigyo", "kyoka", "access", "faq", "otoiawase"];
+        const ROUTES = ["jisseki", "jigyo", "access", "faq", "otoiawase"];
         const home = document.getElementById("top"),
           foot = document.querySelector("footer");
         const base = document.title;
