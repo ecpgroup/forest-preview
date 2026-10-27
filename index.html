@@ -208,274 +208,117 @@
         }
       }
 
-      /* ---------- hero (scroll story) ---------- */
-      .story {
+      /* ---------- hero(写真があれば案A=現場写真を全面に、なければ案C=言葉と数字) ---------- */
+      .hero {
         position: relative;
-        height: 340vh;
-      }
-      .stage {
-        position: sticky;
-        top: 0;
-        height: 100svh;
-        overflow: hidden;
-      }
-      #terrain {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        display: block;
-      }
-      #terrain .ct {
-        fill: none;
-        stroke: var(--contour);
-        stroke-width: 0.8;
-        opacity: 0.55;
-      }
-      #terrain .ct.idx {
-        stroke-width: 1.6;
-        opacity: 0.85;
-      }
-      #terrain .tr {
-        fill: none;
-        stroke: var(--tree);
-        stroke-width: 1.3;
-        transition:
-          transform 0.7s cubic-bezier(0.5, 0, 0.3, 1),
-          opacity 0.7s;
-        transform-box: fill-box;
-        transform-origin: 50% 100%;
-      }
-      #terrain .tr.cut {
-        transform: rotate(80deg) scale(0.4);
-        opacity: 0;
-      }
-      #terrain .stump {
-        fill: var(--contour);
-        opacity: 0;
-        transition: opacity 0.5s;
-      }
-      #terrain .stump.on {
-        opacity: 0.9;
-      }
-      #terrain .roadbed {
-        fill: none;
-        stroke: var(--road);
-        stroke-linecap: round;
-      }
-      #terrain .roadedge {
-        fill: none;
-        stroke: var(--ink);
-        stroke-width: 1.2;
-        stroke-dasharray: 1 0;
-        opacity: 0.7;
-      }
-      #terrain .roadc {
-        fill: none;
-        stroke: var(--red);
-        stroke-width: 1.6;
-        stroke-dasharray: 10 8;
-      }
-      #terrain .slope {
-        fill: none;
-        stroke: var(--contour);
-        stroke-width: 14;
-        stroke-dasharray: 1.5 5;
-        opacity: 0.7;
-      }
-      #terrain .corridor {
-        fill: none;
-        stroke: var(--red);
-        stroke-width: 1.2;
-        stroke-dasharray: 4 6;
-        opacity: 0;
-        transition: opacity 0.6s;
-      }
-      #terrain .corridor.on {
-        opacity: 0.8;
-      }
-      #terrain .ptlbl {
-        font-family: var(--mono);
-        font-size: 12px;
-        fill: var(--red);
-      }
-      .xh {
-        position: absolute;
-        pointer-events: none;
-        inset: 0;
-        opacity: 0;
-        transition: opacity 0.2s;
-      }
-      .xh.on {
-        opacity: 1;
-      }
-      .xh .v,
-      .xh .h {
-        position: absolute;
-        background: var(--red);
-        opacity: 0.55;
-      }
-      .xh .v {
-        width: 1px;
-        top: 0;
-        bottom: 0;
-      }
-      .xh .h {
-        height: 1px;
-        left: 0;
-        right: 0;
-      }
-      .xh .read {
-        position: absolute;
-        font-family: var(--mono);
-        font-size: 0.72rem;
-        line-height: 1.5;
-        background: var(--paper);
-        border: 1px solid var(--ink);
-        padding: 5px 8px;
-        white-space: nowrap;
-      }
-      .vtitle {
-        position: absolute;
-        white-space: nowrap;
-        right: 6vw;
-        top: calc(110px + env(safe-area-inset-top, 0px));
-        writing-mode: vertical-rl;
-        font-family: var(--mincho);
-        font-weight: 800;
-        font-size: clamp(3.4rem, 9vw, 8.4rem);
-        line-height: 1.12;
-        letter-spacing: 0.12em;
-        color: var(--ink);
-        text-shadow:
-          0 0 18px var(--paper),
-          0 0 2px var(--paper);
-      }
-      .vtitle .r {
-        color: var(--red);
-      }
-      .vsub {
-        position: absolute;
-        white-space: nowrap;
-        right: calc(6vw + clamp(4.4rem, 11vw, 10.6rem));
-        top: calc(118px + env(safe-area-inset-top, 0px));
-        writing-mode: vertical-rl;
-        font-family: var(--mincho);
-        font-weight: 500;
-        font-size: clamp(0.9rem, 1.3vw, 1.1rem);
-        letter-spacing: 0.2em;
-        line-height: 2.1;
-        background: color-mix(in srgb, var(--paper) 70%, transparent);
-        padding: 10px 6px;
-      }
-      .steps {
-        position: absolute;
-        left: 4vw;
-        bottom: calc(5vh + env(safe-area-inset-bottom, 0px));
-        width: min(430px, 88vw);
-        background: var(--paper);
-        border: 1.5px solid var(--ink);
-        box-shadow: 8px 8px 0 var(--ink);
-      }
-      .steps ol {
-        list-style: none;
-      }
-      .steps li {
+        min-height: 100svh;
         display: grid;
-        grid-template-columns: 3.2em 1fr;
-        gap: 4px 10px;
-        padding: 14px 18px;
-        border-bottom: 1px solid var(--line);
-        opacity: 0.4;
-        transition: opacity 0.4s;
+        align-content: center;
+        padding: calc(120px + env(safe-area-inset-top, 0px)) 6vw 64px;
+        overflow: hidden;
       }
-      .steps li:last-child {
-        border-bottom: none;
-      }
-      .steps li.on {
-        opacity: 1;
-      }
-      .steps .no {
-        font-family: var(--mono);
-        color: var(--red);
-        font-size: 0.8rem;
-        padding-top: 4px;
-      }
-      .steps h2 {
+      .hero h1 {
         font-family: var(--mincho);
         font-weight: 800;
-        font-size: 1.25rem;
-        line-height: 1.4;
+        font-size: clamp(3.4rem, 11vw, 8.5rem);
+        line-height: 1.1;
+        letter-spacing: 0.06em;
       }
-      .steps p {
-        grid-column: 2;
-        font-size: 0.82rem;
-        line-height: 1.75;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.5s;
+      .hero h1 .r {
+        color: var(--red);
       }
-      .steps li.on p {
-        max-height: 8em;
+      .hero .lead2 {
+        margin-top: 22px;
+        font-family: var(--mincho);
+        font-weight: 700;
+        font-size: clamp(1rem, 2.2vw, 1.3rem);
+        line-height: 1.9;
       }
-      .scale {
-        position: absolute;
-        left: 4vw;
-        top: calc(84px + env(safe-area-inset-top, 0px));
-        font-family: var(--mono);
-        font-size: 0.7rem;
-        color: var(--ink2);
+      .hero .acts {
+        margin-top: 30px;
         display: flex;
-        align-items: center;
-        gap: 10px;
+        flex-wrap: wrap;
+        gap: 12px;
       }
-      .scale i {
-        display: inline-block;
-        width: 90px;
-        height: 6px;
-        border: 1px solid var(--ink2);
-        border-top: none;
+      .hero .acts .btn {
+        margin-top: 0;
       }
-      .hint {
-        position: absolute;
-        left: 50%;
-        bottom: 16px;
-        transform: translateX(-50%);
-        font-family: var(--mono);
-        font-size: 0.7rem;
-        letter-spacing: 0.2em;
+      .hero .facts {
+        margin-top: 56px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        max-width: 900px;
+      }
+      .hero .facts div {
+        border-top: 2px solid var(--ink);
+        padding-top: 10px;
+      }
+      .hero .facts div:last-child {
+        border-top-color: var(--red);
+      }
+      .hero .facts dt {
+        font-size: 0.8rem;
         color: var(--ink2);
+      }
+      .hero .facts dd {
+        margin-top: 4px;
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: clamp(1rem, 2.6vw, 1.7rem);
+        line-height: 1.35;
+      }
+      .hero .facts dd small {
+        font-size: 0.6em;
+      }
+      .hero .contour {
+        position: absolute;
+        right: 3vw;
+        top: calc(90px + env(safe-area-inset-top, 0px));
+        width: min(42vw, 480px);
+        color: var(--contour);
+        opacity: 0.55;
+        pointer-events: none;
+      }
+      /* 写真があるとき(案A): class に photo、style に --bg を付ける */
+      .hero.photo {
+        color: #fff;
+        background: var(--ink) var(--bg) center / cover no-repeat;
+      }
+      .hero.photo::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(10, 20, 12, 0.38), rgba(10, 20, 12, 0.72));
+      }
+      .hero.photo > * {
+        position: relative;
+      }
+      .hero.photo h1 .r {
+        color: #ff6a5e;
+      }
+      .hero.photo .facts,
+      .hero.photo .contour {
+        display: none;
+      }
+      .hero.photo .btn {
+        background: var(--red);
+        border-color: var(--red);
+      }
+      .hero.photo .btn.ghost {
+        background: transparent;
+        color: #fff;
+        border-color: #fff;
+      }
+      @media (max-width: 1000px) {
+        .hero .contour {
+          display: none;
+        }
       }
       @media (max-width: 760px) {
-        .vtitle {
-          right: 5vw;
-          top: calc(86px + env(safe-area-inset-top, 0px));
-          font-size: 3.2rem;
-        }
-        .vsub {
-          display: none;
-        }
-        .steps {
-          left: 4vw;
-          right: 4vw;
-          width: auto;
-          bottom: calc(3vh + env(safe-area-inset-bottom, 0px));
-          box-shadow: 5px 5px 0 var(--ink);
-        }
-        .steps li {
-          padding: 10px 14px;
-        }
-        .steps h2 {
-          font-size: 1.05rem;
-        }
-        .steps li:not(.on) {
-          display: none;
-        }
-        .scale {
-          display: none;
-        }
-        .hint {
-          display: none;
+        .hero .facts {
+          gap: 10px;
+          margin-top: 40px;
         }
       }
 
@@ -1326,47 +1169,39 @@
     </header>
 
     <main id="top">
-      <!-- ===== HERO：地形図で「調査→伐採→造成」 ===== -->
-      <section class="story" id="story" aria-label="山を拓く仕事">
-        <div class="stage">
-          <svg id="terrain" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <g id="gContours"></g>
-            <path id="slope" class="slope" d="" style="opacity: 0"></path>
-            <path id="roadbed" class="roadbed" d="" stroke-width="0"></path>
-            <g id="gTrees"></g>
-            <path id="corridor" class="corridor" d=""></path>
-            <path id="roadc" class="roadc" d="" style="opacity: 0"></path>
-            <g id="gMarks"></g>
-          </svg>
-          <div class="xh" id="xh" aria-hidden="true">
-            <div class="v"></div>
-            <div class="h"></div>
-            <div class="read"></div>
-          </div>
-          <div class="scale" aria-hidden="true"><i></i>0 ── 100 m　等高線間隔 10 m</div>
-          <h1 class="vtitle">山を<span class="r">拓</span>く。</h1>
-          <p class="vsub">道路も、住宅地も、太陽光発電所も。<br />はじまりは、山の伐採から。</p>
-          <div class="steps" id="steps">
-            <ol>
-              <li data-s="1">
-                <span class="no">01</span>
-                <h2>調べる</h2>
-                <p>現地を歩き、地形と木の状況を把握。どこを、どの順で伐るかを決めます。</p>
-              </li>
-              <li data-s="2">
-                <span class="no">02</span>
-                <h2>伐る</h2>
-                <p>計画線の内側を、重機と有資格者で安全に伐採。大規模な山林にも対応します。</p>
-              </li>
-              <li data-s="3">
-                <span class="no">03</span>
-                <h2>拓く</h2>
-                <p>伐った跡に、道や街の工事がはじまります。伐った木は、グループの伊賀林業でチップへ。</p>
-              </li>
-            </ol>
-          </div>
-          <div class="hint" aria-hidden="true">SCROLL ↓</div>
+      <!-- ===== HERO：写真が届くまでは案C(言葉と数字)。
+           写真が届いたら section に class="hero photo" と style="--bg: url(assets/hero.jpg)" を付けるだけで案A(現場写真を全面に)になる ===== -->
+      <section class="hero" id="story" aria-label="山を拓く仕事">
+        <svg class="contour" viewBox="0 0 480 300" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M0 250 C90 190 180 260 300 200 S440 130 480 160" />
+            <path d="M0 220 C100 160 190 230 310 170 S440 100 480 130" />
+            <path d="M0 190 C110 130 200 200 320 140 S440 70 480 100" />
+            <path d="M0 160 C120 100 210 170 330 110 S440 40 480 70" />
+            <path d="M40 120 C130 70 220 140 340 80 S440 20 480 40" />
+          </g>
+          <path d="M20 290 L470 30" fill="none" stroke="#d8352e" stroke-width="1.5" stroke-dasharray="6 6" />
+        </svg>
+        <h1>山を<span class="r">拓</span>く。</h1>
+        <p class="lead2">道路も、住宅地も、太陽光発電所も。<br />はじまりは、山の伐採から。</p>
+        <div class="acts">
+          <a class="btn" href="#otoiawase">伐採の相談をする</a>
+          <a class="btn ghost" href="#jisseki">施工実績を見る</a>
         </div>
+        <dl class="facts">
+          <div>
+            <dt>創業</dt>
+            <dd>1999<small>年</small></dd>
+          </div>
+          <div>
+            <dt>主な実績</dt>
+            <dd>新名神<br />高速道路</dd>
+          </div>
+          <div>
+            <dt>伐った木は</dt>
+            <dd>伊賀林業で<br />チップに</dd>
+          </div>
+        </dl>
       </section>
 
       <!-- ===== WORKS：実績マップ ===== -->
@@ -1759,7 +1594,6 @@
       <span>フォレスト総建株式会社|〒635-0817 奈良県北葛城郡広陵町寺戸550-3</span>
       <span>© ECPGROUP</span>
     </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
     <script>
       const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -1779,205 +1613,6 @@
             b.textContent = "メニュー";
           }),
         );
-      })();
-
-      /* ---------- 地形図(ヒーロー) ---------- */
-      (() => {
-        const NS = "http://www.w3.org/2000/svg";
-        const svg = document.getElementById("terrain");
-        const W = 1200,
-          H = 800,
-          GX = 150,
-          GY = 100,
-          cell = W / GX;
-        // 乱数(固定シード)
-        let seed = 7;
-        const rnd = () => {
-          seed = (seed * 16807) % 2147483647;
-          return (seed - 1) / 2147483646;
-        };
-        // 標高:山の重ね合わせ+うねり
-        const hills = [
-          { x: 840, y: 250, s: 260, h: 330 },
-          { x: 1060, y: 560, s: 230, h: 240 },
-          { x: 380, y: 180, s: 240, h: 250 },
-          { x: 560, y: 520, s: 200, h: 170 },
-          { x: 180, y: 560, s: 220, h: 150 },
-          { x: 720, y: 720, s: 180, h: 120 },
-        ];
-        const elev = (x, y) => {
-          let z = 80;
-          for (const k of hills) {
-            const dx = x - k.x,
-              dy = y - k.y;
-            z += k.h * Math.exp(-(dx * dx + dy * dy) / (2 * k.s * k.s));
-          }
-          z +=
-            18 * Math.sin(x / 61 + Math.cos(y / 97) * 2) + 12 * Math.cos(y / 53 - x / 140) + 7 * Math.sin((x + y) / 29);
-          return z;
-        };
-        const vals = new Float64Array(GX * GY);
-        for (let j = 0; j < GY; j++)
-          for (let i = 0; i < GX; i++) vals[j * GX + i] = elev(i * cell + cell / 2, j * cell + cell / 2);
-        const th = d3.range(60, 520, 10);
-        const contours = d3.contours().size([GX, GY]).thresholds(th)(vals);
-        const path = d3.geoPath(d3.geoIdentity().scale(cell));
-        const gC = document.getElementById("gContours");
-        const cPaths = [];
-        contours.forEach((c) => {
-          const p = document.createElementNS(NS, "path");
-          p.setAttribute("d", path(c));
-          p.setAttribute("class", "ct" + (c.value % 50 === 0 ? " idx" : ""));
-          gC.appendChild(p);
-          cPaths.push(p);
-        });
-
-        // 計画道路(造成計画線)
-        const roadD = "M -40 690 C 220 640, 330 520, 520 470 S 820 430, 930 330 S 1120 170, 1260 140";
-        ["slope", "roadbed", "corridor", "roadc"].forEach((id) => document.getElementById(id).setAttribute("d", roadD));
-        const probe = document.getElementById("roadbed");
-        const L = probe.getTotalLength();
-        const samples = [];
-        for (let s = 0; s <= L; s += 8) {
-          const p = probe.getPointAtLength(s);
-          samples.push({ x: p.x, y: p.y, s });
-        }
-        const near = (x, y) => {
-          let best = 1e9,
-            bs = 0;
-          for (const p of samples) {
-            const d = (p.x - x) ** 2 + (p.y - y) ** 2;
-            if (d < best) {
-              best = d;
-              bs = p.s;
-            }
-          }
-          return { d: Math.sqrt(best), s: bs };
-        };
-
-        // 樹木記号(針葉樹 ∧ / 広葉樹 ○)
-        const gT = document.getElementById("gTrees"),
-          gM = document.getElementById("gMarks");
-        const trees = [];
-        let tries = 0;
-        while (trees.length < 560 && tries < 9000) {
-          tries++;
-          const x = rnd() * W,
-            y = rnd() * H,
-            z = elev(x, y);
-          if (z < 150 || rnd() > Math.min(1, (z - 140) / 160)) continue;
-          if (trees.some((t) => (t.x - x) ** 2 + (t.y - y) ** 2 < 196)) continue;
-          const n = near(x, y);
-          const el = document.createElementNS(NS, "path");
-          const conifer = rnd() < 0.6;
-          el.setAttribute(
-            "d",
-            conifer
-              ? `M${x - 4} ${y + 3} L${x} ${y - 5} L${x + 4} ${y + 3}`
-              : `M${x + 3.6} ${y} A3.6 3.6 0 1 1 ${x - 3.6} ${y} A3.6 3.6 0 1 1 ${x + 3.6} ${y}`,
-          );
-          el.setAttribute("class", "tr");
-          gT.appendChild(el);
-          const t = { x, y, el, cut: n.d < 62, s: n.s };
-          if (t.cut) {
-            const st = document.createElementNS(NS, "circle");
-            st.setAttribute("cx", x);
-            st.setAttribute("cy", y);
-            st.setAttribute("r", 1.6);
-            st.setAttribute("class", "stump");
-            gM.appendChild(st);
-            t.stump = st;
-          }
-          trees.push(t);
-        }
-        // 計画線の起点・終点マーク
-        const mark = (p, label) => {
-          const g = document.createElementNS(NS, "g");
-          g.innerHTML = `<path d="M${p.x} ${p.y - 9} L${p.x + 8} ${p.y + 6} L${p.x - 8} ${p.y + 6} Z" fill="none" stroke="var(--red)" stroke-width="2"/><text class="ptlbl" x="${p.x + 12}" y="${p.y + 4}">${label}</text>`;
-          g.style.opacity = 0;
-          g.style.transition = "opacity .5s";
-          gM.appendChild(g);
-          return g;
-        };
-        const mA = mark(probe.getPointAtLength(L * 0.18), "BP"),
-          mB = mark(probe.getPointAtLength(L * 0.82), "EP");
-
-        // 等高線の描画アニメ準備
-        cPaths.forEach((p) => {
-          const l = p.getTotalLength();
-          p.style.strokeDasharray = l;
-          p.style.strokeDashoffset = reduced ? 0 : l;
-          p._l = l;
-        });
-
-        const roadbed = document.getElementById("roadbed"),
-          roadc = document.getElementById("roadc"),
-          slope = document.getElementById("slope"),
-          corridor = document.getElementById("corridor");
-        roadbed.style.strokeDasharray = L;
-        roadbed.style.strokeDashoffset = L;
-        roadbed.style.transition = "stroke-dashoffset 1.6s cubic-bezier(.5,0,.2,1), stroke-width .6s";
-        slope.style.transition = roadc.style.transition = "opacity .8s .8s";
-
-        const items = [...document.querySelectorAll("#steps li")];
-        let cur = 0;
-        function setStep(s) {
-          if (s === cur) return;
-          cur = s;
-          items.forEach((li) => li.classList.toggle("on", +li.dataset.s === s));
-          const cutOn = s >= 2,
-            roadOn = s >= 3;
-          corridor.classList.toggle("on", s === 2 || (s === 1 && false));
-          mA.style.opacity = mB.style.opacity = s >= 2 ? 1 : 0;
-          trees.forEach((t) => {
-            if (!t.cut) return;
-            t.el.style.transitionDelay = cutOn ? (t.s / L) * 0.9 + "s" : "0s";
-            t.el.classList.toggle("cut", cutOn);
-            t.stump.classList.toggle("on", cutOn && !roadOn);
-          });
-          roadbed.setAttribute("stroke-width", roadOn ? 46 : 0);
-          roadbed.style.strokeDashoffset = roadOn ? 0 : L;
-          roadc.style.opacity = slope.style.opacity = roadOn ? 1 : 0;
-          corridor.classList.toggle("on", s === 2);
-        }
-        // スクロール進捗
-        const story = document.getElementById("story");
-        function onScroll() {
-          const r = story.getBoundingClientRect();
-          const total = story.offsetHeight - innerHeight;
-          const p = Math.min(1, Math.max(0, -r.top / total));
-          if (!reduced) {
-            const k = Math.min(1, p / 0.28 + 0.35);
-            cPaths.forEach((c) => (c.style.strokeDashoffset = c._l * (1 - k)));
-          }
-          setStep(p < 0.34 ? 1 : p < 0.68 ? 2 : 3);
-        }
-        addEventListener("scroll", onScroll, { passive: true });
-        onScroll();
-
-        // 照準(標高の読み取り)
-        const xh = document.getElementById("xh"),
-          v = xh.querySelector(".v"),
-          h = xh.querySelector(".h"),
-          rd = xh.querySelector(".read");
-        const stage = svg.parentElement;
-        stage.addEventListener("pointermove", (e) => {
-          if (e.pointerType !== "mouse") return;
-          const pt = svg.createSVGPoint();
-          pt.x = e.clientX;
-          pt.y = e.clientY;
-          const m = pt.matrixTransform(svg.getScreenCTM().inverse());
-          const rect = stage.getBoundingClientRect(),
-            lx = e.clientX - rect.left,
-            ly = e.clientY - rect.top;
-          v.style.left = lx + "px";
-          h.style.top = ly + "px";
-          rd.style.left = Math.min(lx + 14, rect.width - 190) + "px";
-          rd.style.top = Math.min(ly + 14, rect.height - 70) + "px";
-          rd.innerHTML = `X ${(m.x * 1.1).toFixed(1)} m<br>Y ${((H - m.y) * 1.1).toFixed(1)} m<br>標高 ${elev(m.x, m.y).toFixed(1)} m`;
-          xh.classList.add("on");
-        });
-        stage.addEventListener("pointerleave", () => xh.classList.remove("on"));
       })();
 
       /* ---------- 実績マップ ---------- */
