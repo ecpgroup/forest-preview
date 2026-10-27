@@ -1,0 +1,2145 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>【試作 案1】フォレスト総建株式会社</title>
+    <meta
+      name="description"
+      content="奈良・広陵町の林業土木会社。高速道路・宅地造成・太陽光発電所に伴う山林の調査と伐採を、1999年から近畿一円で。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --paper: #ffffff;
+        --paper2: #f4f6f7;
+        --ink: #14324a;
+        --ink2: #4a5a66;
+        --moss: #4d6b3c;
+        --leaf: #5db33a;
+        --red: #2e7d4f;
+        --blue: #1f4fa8;
+        --contour: #8a6e4b;
+        --line: rgba(20, 50, 74, 0.14);
+        --tree: #2f4a2a;
+        --road: #cfc3a6;
+        --mincho: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+        --goth: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+        --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+        color-scheme: light;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --paper: #141b16;
+          --paper2: #1b241d;
+          --ink: #e9e4d6;
+          --ink2: #b9b3a3;
+          --moss: #8fb27a;
+          --leaf: #7cc95a;
+          --red: #ef5a4c;
+          --blue: #6e95e0;
+          --contour: #b49870;
+          --line: rgba(233, 228, 214, 0.16);
+          --tree: #88a97a;
+          --road: #4a4436;
+          color-scheme: dark;
+        }
+      }
+      :root[data-theme="dark"] {
+        --paper: #141b16;
+        --paper2: #1b241d;
+        --ink: #e9e4d6;
+        --ink2: #b9b3a3;
+        --moss: #8fb27a;
+        --leaf: #7cc95a;
+        --red: #ef5a4c;
+        --blue: #6e95e0;
+        --contour: #b49870;
+        --line: rgba(233, 228, 214, 0.16);
+        --tree: #88a97a;
+        --road: #4a4436;
+        color-scheme: dark;
+      }
+      html {
+        scroll-padding-top: calc(70px + env(safe-area-inset-top, 0px));
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--goth);
+        line-height: 1.9;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+      a {
+        color: inherit;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      .mono {
+        font-family: var(--mono);
+      }
+
+      /* ---------- header ---------- */
+      .hd {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: calc(12px + env(safe-area-inset-top, 0px)) 4vw 12px;
+        background: color-mix(in srgb, var(--paper) 86%, transparent);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--line);
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0 0 auto;
+        height: env(safe-area-inset-top, 0px);
+        z-index: 60;
+        background: color-mix(in srgb, var(--paper) 86%, transparent);
+        backdrop-filter: blur(8px);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+      }
+      .brand img {
+        width: 34px;
+        height: auto;
+      }
+      .brand b {
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: 1.05rem;
+        letter-spacing: 0.06em;
+        display: block;
+        line-height: 1.2;
+      }
+      .brand small {
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        color: var(--ink2);
+        display: block;
+      }
+      .hd nav ul {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        align-items: center;
+      }
+      .hd nav a {
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+      .hd nav a:hover {
+        color: var(--red);
+      }
+      .hd nav a.tel {
+        font-family: var(--mono);
+        font-weight: 500;
+        border: 1.5px solid var(--ink);
+        padding: 6px 12px;
+      }
+      .menu {
+        display: none;
+        font: inherit;
+        font-weight: 700;
+        font-size: 0.85rem;
+        background: var(--ink);
+        color: var(--paper);
+        border: none;
+        padding: 8px 14px;
+      }
+      @media (max-width: 860px) {
+        .hd nav ul {
+          display: none;
+        }
+        .menu {
+          display: block;
+        }
+        .hd.open nav ul {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          position: fixed;
+          inset: 0;
+          background: var(--paper);
+          padding: calc(90px + env(safe-area-inset-top, 0px)) 8vw 40px;
+          gap: 4px;
+          z-index: -1;
+        }
+        .hd.open nav a {
+          font-family: var(--mincho);
+          font-size: 1.4rem;
+          display: block;
+          padding: 12px 0;
+          border-bottom: 1px solid var(--line);
+          width: 84vw;
+        }
+      }
+
+      /* ---------- hero(写真があれば案A=現場写真を全面に、なければ案C=言葉と数字) ---------- */
+      .hero {
+        position: relative;
+        min-height: 100svh;
+        display: grid;
+        align-content: center;
+        padding: calc(120px + env(safe-area-inset-top, 0px)) 6vw 64px;
+        overflow: hidden;
+      }
+      .hero h1 {
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: clamp(3.4rem, 11vw, 8.5rem);
+        line-height: 1.1;
+        letter-spacing: 0.06em;
+      }
+      .hero h1 .r {
+        color: var(--red);
+      }
+      .hero .lead2 {
+        margin-top: 22px;
+        font-family: var(--mincho);
+        font-weight: 700;
+        font-size: clamp(1rem, 2.2vw, 1.3rem);
+        line-height: 1.9;
+      }
+      .hero .acts {
+        margin-top: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .hero .acts .btn {
+        margin-top: 0;
+      }
+      .hero .facts {
+        margin-top: 56px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        max-width: 900px;
+      }
+      .hero .facts div {
+        border-top: 2px solid var(--ink);
+        padding-top: 10px;
+      }
+      .hero .facts div:last-child {
+        border-top-color: var(--red);
+      }
+      .hero .facts dt {
+        font-size: 0.8rem;
+        color: var(--ink2);
+      }
+      .hero .facts dd {
+        margin-top: 4px;
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: clamp(1rem, 2.6vw, 1.7rem);
+        line-height: 1.35;
+      }
+      .hero .facts dd small {
+        font-size: 0.6em;
+      }
+      .hero .contour {
+        position: absolute;
+        right: 3vw;
+        top: calc(90px + env(safe-area-inset-top, 0px));
+        width: min(42vw, 480px);
+        color: var(--contour);
+        opacity: 0.55;
+        pointer-events: none;
+      }
+      /* 写真があるとき(案A): class に photo、style に --bg を付ける */
+      .hero.photo {
+        color: #fff;
+        background: var(--ink) var(--bg) center / cover no-repeat;
+      }
+      .hero.photo::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(10, 20, 12, 0.38), rgba(10, 20, 12, 0.72));
+      }
+      .hero.photo > * {
+        position: relative;
+      }
+      .hero.photo h1 .r {
+        color: #ff6a5e;
+      }
+      .hero.photo .facts,
+      .hero.photo .contour {
+        display: none;
+      }
+      .hero.photo .btn {
+        background: var(--red);
+        border-color: var(--red);
+      }
+      .hero.photo .btn.ghost {
+        background: transparent;
+        color: #fff;
+        border-color: #fff;
+      }
+      @media (max-width: 1000px) {
+        .hero .contour {
+          display: none;
+        }
+      }
+      @media (max-width: 760px) {
+        .hero .facts {
+          gap: 10px;
+          margin-top: 40px;
+        }
+      }
+
+      /* ---------- common ---------- */
+      .sec {
+        padding: 120px 6vw;
+        position: relative;
+      }
+      .sec.alt {
+        background: var(--paper2);
+      }
+      .kicker {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        letter-spacing: 0.24em;
+        color: var(--red);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .kicker::before {
+        content: "";
+        width: 28px;
+        height: 1.5px;
+        background: var(--red);
+      }
+      .h2 {
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: clamp(1.9rem, 4.4vw, 3.4rem);
+        line-height: 1.35;
+        margin: 14px 0 22px;
+        letter-spacing: 0.02em;
+      }
+      .lead {
+        max-width: 40em;
+        font-size: 1rem;
+        color: var(--ink2);
+      }
+
+      /* ---------- works map ---------- */
+      .works-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
+        gap: 4vw;
+        margin-top: 46px;
+        align-items: start;
+      }
+      .mapbox {
+        position: relative;
+        border: 1.5px solid var(--ink);
+        background: var(--paper);
+      }
+      #kinki {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      #kinki .grat {
+        stroke: var(--line);
+        stroke-width: 1;
+      }
+      #kinki .gl {
+        font-family: var(--mono);
+        font-size: 10px;
+        fill: var(--ink2);
+      }
+      #kinki .pref {
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: 34px;
+        fill: var(--ink);
+        opacity: 0.09;
+        letter-spacing: 0.2em;
+      }
+      #kinki .flow {
+        fill: none;
+        stroke: var(--moss);
+        stroke-width: 1.2;
+        stroke-dasharray: 3 5;
+        opacity: 0.6;
+      }
+      #kinki .pin {
+        cursor: pointer;
+      }
+      #kinki .pin .tri {
+        fill: var(--paper);
+        stroke: var(--red);
+        stroke-width: 2.4;
+        transition: fill 0.2s;
+      }
+      #kinki .pin .dot {
+        fill: var(--red);
+      }
+      #kinki .pin:hover .tri,
+      #kinki .pin.on .tri {
+        fill: var(--red);
+      }
+      #kinki .pin:focus-visible {
+        outline: none;
+      }
+      #kinki .pin:focus-visible .tri {
+        stroke-width: 4;
+      }
+      #kinki .pl {
+        font-family: var(--goth);
+        font-weight: 700;
+        font-size: 13px;
+        fill: var(--ink);
+        paint-order: stroke;
+        stroke: var(--paper);
+        stroke-width: 4px;
+      }
+      #kinki .hq circle {
+        fill: none;
+        stroke: var(--blue);
+        stroke-width: 2.4;
+      }
+      #kinki .hq .c2 {
+        fill: var(--blue);
+      }
+      #kinki .iga rect {
+        fill: var(--moss);
+      }
+      #kinki .ml {
+        font-family: var(--goth);
+        font-weight: 700;
+        font-size: 13px;
+        paint-order: stroke;
+        stroke: var(--paper);
+        stroke-width: 4px;
+      }
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 18px;
+        font-size: 0.78rem;
+        padding: 10px 14px;
+        border-top: 1px solid var(--line);
+        color: var(--ink2);
+      }
+      .legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .card {
+        border: 1.5px solid var(--ink);
+        background: var(--paper);
+        padding: 24px 24px 20px;
+        min-height: 220px;
+      }
+      .card .cat {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        background: var(--ink);
+        color: var(--paper);
+        padding: 2px 10px;
+      }
+      .card .date {
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        color: var(--ink2);
+        margin-left: 8px;
+      }
+      .card h3 {
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: 1.5rem;
+        line-height: 1.45;
+        margin: 12px 0 6px;
+      }
+      .card .place {
+        font-size: 0.88rem;
+        color: var(--ink2);
+      }
+      .card .note {
+        font-size: 0.75rem;
+        color: var(--ink2);
+        margin-top: 14px;
+        border-top: 1px dashed var(--line);
+        padding-top: 10px;
+      }
+      .wlist {
+        list-style: none;
+        margin-top: 18px;
+        border-top: 1.5px solid var(--ink);
+      }
+      .wlist li {
+        border-bottom: 1px solid var(--line);
+      }
+      .wlist button {
+        all: unset;
+        cursor: pointer;
+        display: grid;
+        grid-template-columns: 5.2em 1fr auto;
+        gap: 10px;
+        align-items: baseline;
+        width: 100%;
+        padding: 10px 4px;
+        font-size: 0.88rem;
+      }
+      .wlist button:hover,
+      .wlist button[aria-pressed="true"] {
+        color: var(--red);
+      }
+      .wlist button:focus-visible {
+        outline: 2px solid var(--red);
+      }
+      .wlist .d {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--ink2);
+      }
+      .wlist .c {
+        font-size: 0.72rem;
+        color: var(--ink2);
+      }
+      @media (max-width: 900px) {
+        .works-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ---------- schedule (gantt) ---------- */
+      .gantt {
+        margin-top: 50px;
+        border: 1.5px solid var(--ink);
+        background: var(--paper);
+        overflow-x: auto;
+      }
+      .gantt table {
+        width: 100%;
+        min-width: 720px;
+        border-collapse: collapse;
+      }
+      .gantt th,
+      .gantt td {
+        border-bottom: 1px solid var(--line);
+        padding: 0;
+      }
+      .gantt thead th {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 400;
+        color: var(--ink2);
+        padding: 8px 0;
+        border-left: 1px dashed var(--line);
+        text-align: center;
+      }
+      .gantt thead th:first-child {
+        border-left: none;
+        text-align: left;
+        padding-left: 18px;
+      }
+      .gantt tbody th {
+        width: 31%;
+        text-align: left;
+        vertical-align: top;
+        padding: 18px 18px;
+        border-right: 1.5px solid var(--ink);
+      }
+      .gantt tbody th b {
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: 1.2rem;
+        display: block;
+      }
+      .gantt tbody th small {
+        display: block;
+        font-weight: 400;
+        font-size: 0.8rem;
+        color: var(--ink2);
+        line-height: 1.7;
+        margin-top: 4px;
+      }
+      .gantt tbody th .who {
+        display: inline-block;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--paper);
+        background: var(--moss);
+        padding: 1px 8px;
+        margin-top: 6px;
+      }
+      .gantt td.lane {
+        position: relative;
+        background-image: repeating-linear-gradient(
+          90deg,
+          transparent 0 calc(12.5% - 1px),
+          var(--line) calc(12.5% - 1px) 12.5%
+        );
+      }
+      .gantt .bar {
+        position: absolute;
+        top: 50%;
+        height: 16px;
+        margin-top: -8px;
+        background: var(--ink);
+        transform-origin: left center;
+        transform: scaleX(0);
+        transition: transform 1s cubic-bezier(0.5, 0, 0.2, 1);
+      }
+      .gantt .bar.iga {
+        background: var(--moss);
+      }
+      .gantt .bar.red {
+        background: var(--red);
+      }
+      .gantt.on .bar {
+        transform: scaleX(1);
+      }
+      .gantt .ms {
+        position: absolute;
+        top: 50%;
+        width: 12px;
+        height: 12px;
+        margin: -6px 0 0 -6px;
+        background: var(--red);
+        transform: rotate(45deg);
+      }
+      .gnote {
+        font-size: 0.75rem;
+        color: var(--ink2);
+        margin-top: 10px;
+      }
+
+      /* ---------- message ---------- */
+      .msg {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 6vw;
+        align-items: start;
+      }
+      .msg .vq {
+        writing-mode: vertical-rl;
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+        letter-spacing: 0.14em;
+        line-height: 1.7;
+      }
+      .msg p {
+        max-width: 36em;
+        margin-bottom: 1.2em;
+      }
+      .msg .sig {
+        font-family: var(--mincho);
+        font-weight: 700;
+        margin-top: 28px;
+      }
+      @media (max-width: 760px) {
+        .msg {
+          grid-template-columns: 1fr;
+        }
+        .msg .vq {
+          writing-mode: horizontal-tb;
+        }
+      }
+
+      /* ---------- company ---------- */
+      .co {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5vw;
+        margin-top: 40px;
+      }
+      .co dl {
+        display: grid;
+        grid-template-columns: 7.5em 1fr;
+        border-top: 1.5px solid var(--ink);
+      }
+      .co dt,
+      .co dd {
+        padding: 13px 4px;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.9rem;
+      }
+      .co dt {
+        font-weight: 700;
+        color: var(--ink2);
+      }
+      .hist {
+        list-style: none;
+        border-top: 1.5px solid var(--ink);
+      }
+      .hist li {
+        display: grid;
+        grid-template-columns: 6.6em 1fr;
+        padding: 13px 4px;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.9rem;
+      }
+      .hist .y {
+        font-family: var(--mono);
+        color: var(--red);
+      }
+      @media (max-width: 860px) {
+        .co {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ---------- recruit / contact / group ---------- */
+      .band {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border-top: 1.5px solid var(--ink);
+        border-bottom: 1.5px solid var(--ink);
+      }
+      .band > div {
+        padding: 70px 6vw;
+      }
+      .band > div + div {
+        border-left: 1.5px solid var(--ink);
+      }
+      .band h3 {
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: clamp(1.6rem, 3vw, 2.3rem);
+        line-height: 1.4;
+        margin: 10px 0 16px;
+      }
+      .band p {
+        color: var(--ink2);
+        max-width: 28em;
+      }
+      .btn {
+        display: inline-block;
+        margin-top: 24px;
+        font-weight: 700;
+        text-decoration: none;
+        background: var(--ink);
+        color: var(--paper);
+        padding: 14px 28px;
+        border: 1.5px solid var(--ink);
+        transition: 0.2s;
+      }
+      .btn:hover {
+        background: var(--red);
+        border-color: var(--red);
+      }
+      .btn.ghost {
+        background: transparent;
+        color: var(--ink);
+      }
+      .tel-big {
+        font-family: var(--mono);
+        font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+        text-decoration: none;
+        display: block;
+        margin-top: 8px;
+      }
+      @media (max-width: 860px) {
+        .band {
+          grid-template-columns: 1fr;
+        }
+        .band > div + div {
+          border-left: none;
+          border-top: 1.5px solid var(--ink);
+        }
+      }
+      .group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 36px;
+      }
+      .group a {
+        display: block;
+        text-decoration: none;
+        border: 1.5px solid var(--ink);
+        padding: 20px;
+        transition: 0.2s;
+        background: var(--paper);
+      }
+      .group a:hover {
+        transform: translate(-3px, -3px);
+        box-shadow: 6px 6px 0 var(--ink);
+      }
+      .group b {
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: 1.2rem;
+        display: block;
+      }
+      .group small {
+        font-size: 0.8rem;
+        color: var(--ink2);
+        display: block;
+        margin-top: 6px;
+        line-height: 1.7;
+      }
+      .group .rel {
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        color: var(--red);
+        letter-spacing: 0.1em;
+      }
+      @media (max-width: 860px) {
+        .group {
+          grid-template-columns: 1fr;
+        }
+      }
+      footer {
+        padding: 40px 6vw calc(40px + env(safe-area-inset-bottom, 0px));
+        font-size: 0.8rem;
+        color: var(--ink2);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .tbd {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--red);
+        border: 1.5px dashed var(--red);
+        padding: 0 7px;
+        margin-left: 4px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+      /* ===== 内部ページ ===== */
+      .page {
+        min-height: 100svh;
+        padding-bottom: 40px;
+      }
+      .p-hero {
+        padding: calc(140px + env(safe-area-inset-top, 0px)) 6vw 60px;
+        border-bottom: 1.5px solid var(--ink);
+        background: repeating-radial-gradient(
+          circle at 85% 30%,
+          transparent 0 22px,
+          color-mix(in srgb, var(--contour) 22%, transparent) 22px 23px
+        );
+      }
+      .crumb {
+        font-size: 0.8rem;
+        color: var(--ink2);
+        margin-bottom: 22px;
+      }
+      .p-h1 {
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: clamp(2.2rem, 5.4vw, 4.2rem);
+        line-height: 1.3;
+        margin: 10px 0 18px;
+      }
+      .p-sec {
+        padding: 60px 6vw 10px;
+        max-width: 1240px;
+      }
+      .p-sec.two {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 5vw;
+        align-items: start;
+      }
+      @media (max-width: 860px) {
+        .p-sec.two {
+          grid-template-columns: 1fr;
+        }
+      }
+      .p-h2 {
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+        margin-bottom: 18px;
+      }
+      .body {
+        max-width: 44em;
+        color: var(--ink2);
+      }
+      .pnote {
+        font-size: 0.8rem;
+        color: var(--ink2);
+        margin-top: 16px;
+      }
+      .kv {
+        display: grid;
+        grid-template-columns: 8.5em 1fr;
+        border-top: 1.5px solid var(--ink);
+      }
+      .kv dt,
+      .kv dd {
+        padding: 12px 4px;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.9rem;
+      }
+      .kv dt {
+        font-weight: 700;
+        color: var(--ink2);
+      }
+      .svc {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .svc article {
+        border: 1.5px solid var(--ink);
+        padding: 26px;
+        background: var(--paper);
+      }
+      .svc .no {
+        font-family: var(--mono);
+        color: var(--red);
+      }
+      .svc h2 {
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: 1.5rem;
+        margin: 6px 0 10px;
+      }
+      .svc p {
+        color: var(--ink2);
+        margin-bottom: 14px;
+      }
+      @media (max-width: 860px) {
+        .svc {
+          grid-template-columns: 1fr;
+        }
+      }
+      .wgrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
+      }
+      .wcard {
+        border: 1.5px solid var(--ink);
+        background: var(--paper);
+      }
+      .wcard .ph {
+        aspect-ratio: 4/3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1.5px solid var(--ink);
+        background: repeating-radial-gradient(
+          circle at 30% 70%,
+          transparent 0 14px,
+          color-mix(in srgb, var(--contour) 28%, transparent) 14px 15px
+        );
+      }
+      .wcard .ph span {
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        color: var(--ink2);
+        background: var(--paper);
+        padding: 2px 8px;
+        border: 1px dashed var(--ink2);
+      }
+      .wcard .in {
+        padding: 16px 18px 18px;
+      }
+      .wcard .cat {
+        font-size: 0.72rem;
+        font-weight: 700;
+        background: var(--ink);
+        color: var(--paper);
+        padding: 1px 8px;
+      }
+      .wcard .d {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        color: var(--ink2);
+        margin-left: 8px;
+      }
+      .wcard h3 {
+        font-family: var(--mincho);
+        font-weight: 800;
+        font-size: 1.15rem;
+        line-height: 1.5;
+        margin: 8px 0 4px;
+      }
+      .wcard p {
+        font-size: 0.82rem;
+        color: var(--ink2);
+      }
+      .faq details {
+        border-bottom: 1px solid var(--line);
+      }
+      .faq summary {
+        cursor: pointer;
+        font-weight: 700;
+        padding: 16px 36px 16px 0;
+        list-style: none;
+        position: relative;
+      }
+      .faq summary::-webkit-details-marker {
+        display: none;
+      }
+      .faq summary::after {
+        content: "+";
+        position: absolute;
+        right: 6px;
+        top: 10px;
+        font-family: var(--mono);
+        font-size: 1.4rem;
+        color: var(--red);
+      }
+      .faq details[open] summary::after {
+        content: "−";
+      }
+      .faq details div {
+        padding: 0 0 18px;
+        color: var(--ink2);
+      }
+      .form {
+        max-width: 860px;
+      }
+      .form fieldset {
+        border: none;
+      }
+      .form legend,
+      .f-row > span {
+        font-weight: 700;
+        font-size: 0.88rem;
+        margin-bottom: 8px;
+        display: block;
+      }
+      .form em {
+        font-style: normal;
+        font-size: 0.68rem;
+        background: var(--red);
+        color: #fff;
+        padding: 1px 6px;
+        margin-left: 8px;
+      }
+      .f-row {
+        display: block;
+        margin-bottom: 18px;
+      }
+      .f-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 18px;
+      }
+      @media (max-width: 700px) {
+        .f-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .form input:not([type="radio"]),
+      .form textarea {
+        width: 100%;
+        font: inherit;
+        color: var(--ink);
+        background: var(--paper);
+        border: 1.5px solid var(--ink);
+        padding: 11px 13px;
+      }
+      .form input:focus,
+      .form textarea:focus {
+        outline: 2px solid var(--red);
+        outline-offset: 1px;
+      }
+      .opts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .opts label {
+        position: relative;
+      }
+      .opts input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .opts span {
+        display: inline-block;
+        border: 1.5px solid var(--ink);
+        padding: 9px 14px;
+        font-weight: 700;
+        font-size: 0.88rem;
+        cursor: pointer;
+      }
+      .opts input:checked + span {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .opts input:focus-visible + span {
+        outline: 2px solid var(--red);
+      }
+      .f-err {
+        color: var(--red);
+        font-weight: 700;
+        min-height: 1.4em;
+      }
+      .btn.ghost {
+        background: transparent;
+        color: var(--ink);
+      }
+      .p-hero a,
+      .body a,
+      .faq a {
+        color: var(--red);
+      }
+      .alt2 {
+        background: var(--paper2);
+        max-width: none;
+        margin-top: 50px;
+        padding-bottom: 50px;
+      }
+      .hd nav a[aria-current="page"] {
+        color: var(--red);
+      }
+      .hd nav a.cta {
+        background: var(--ink);
+        color: var(--paper);
+        padding: 6px 12px;
+      }
+
+      .hd.open {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        background: var(--paper);
+      }
+
+      /* ===================== 試作: 案1 元請け向けの、きちんと型 ===================== */
+      .hd {
+        background: rgba(255, 255, 255, 0.94);
+      }
+      .hd nav a.cta {
+        background: var(--ink);
+        color: #fff;
+      }
+      .sec {
+        padding: 88px 6vw;
+      }
+      .kicker {
+        font-family: var(--goth);
+        font-weight: 700;
+        letter-spacing: 0.12em;
+      }
+      .h2 {
+        font-weight: 700;
+        font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+        letter-spacing: 0;
+      }
+      .btn {
+        border-radius: 2px;
+      }
+      .btn:hover {
+        background: var(--red);
+        border-color: var(--red);
+        color: #fff;
+      }
+      .bhero {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        min-height: 88svh;
+        padding-top: calc(64px + env(safe-area-inset-top, 0px));
+        border-bottom: 1px solid var(--line);
+      }
+      .bhero .txt {
+        padding: 9vh 6vw 8vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .bhero h1 {
+        font-weight: 700;
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        line-height: 1.3;
+        margin: 16px 0 20px;
+      }
+      .bhero .lead {
+        font-size: 1.02rem;
+      }
+      .bhero .acts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+      }
+      .bhero .acts .btn {
+        margin-top: 0;
+      }
+      .bhero .tel {
+        margin-top: 22px;
+        font-size: 0.9rem;
+        color: var(--ink2);
+      }
+      .bhero .tel a {
+        font-weight: 700;
+        color: var(--ink);
+        font-size: 1.2rem;
+        text-decoration: none;
+        margin-left: 6px;
+      }
+      /* 右側: 写真が届くまでは数字のパネル。写真が来たら .media に photo と --bg を付ける */
+      .bhero .media {
+        background: var(--ink);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 26px;
+        padding: 8vh 5vw;
+      }
+      .bhero .media.photo {
+        background: var(--ink) var(--bg) center / cover no-repeat;
+      }
+      .bhero .media.photo > * {
+        display: none;
+      }
+      .bhero .media dt {
+        font-size: 0.82rem;
+        color: #a9c3d3;
+      }
+      .bhero .media dd {
+        font-size: clamp(1.4rem, 2.6vw, 2rem);
+        font-weight: 700;
+        line-height: 1.35;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        padding-bottom: 16px;
+      }
+      .bhero .media dd small {
+        font-size: 0.55em;
+        margin-left: 2px;
+      }
+      .clients {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px 28px;
+        padding: 22px 6vw;
+        background: var(--paper2);
+        border-bottom: 1px solid var(--line);
+        font-size: 0.92rem;
+      }
+      .clients b {
+        font-size: 0.78rem;
+        color: var(--red);
+        letter-spacing: 0.12em;
+      }
+      .clients span {
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .clients small {
+        color: var(--ink2);
+      }
+      .svc3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 36px;
+      }
+      .svc3 a {
+        display: block;
+        text-decoration: none;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-top: 3px solid var(--red);
+        padding: 24px 22px 22px;
+        transition: 0.2s;
+      }
+      .svc3 a:hover {
+        border-color: var(--ink);
+        border-top-color: var(--red);
+      }
+      .svc3 .no {
+        font-family: var(--mono);
+        color: var(--red);
+        font-size: 0.8rem;
+      }
+      .svc3 h3 {
+        font-size: 1.25rem;
+        margin: 6px 0 8px;
+      }
+      .svc3 p {
+        font-size: 0.9rem;
+        color: var(--ink2);
+        line-height: 1.8;
+      }
+      .svc3 .more {
+        display: inline-block;
+        margin-top: 12px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .msg .vq {
+        writing-mode: horizontal-tb;
+        font-weight: 700;
+        font-size: clamp(1.5rem, 2.6vw, 2rem);
+        letter-spacing: 0.04em;
+      }
+      .msg {
+        grid-template-columns: 1fr 1.6fr;
+      }
+      .band {
+        background: var(--ink);
+        color: #fff;
+        border: 0;
+      }
+      .band > div + div {
+        border-left: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .band p,
+      .band .kicker {
+        color: #c9d6de;
+      }
+      .band .kicker::before {
+        background: #8fd1a8;
+      }
+      .band .btn {
+        background: #fff;
+        color: var(--ink);
+        border-color: #fff;
+      }
+      .band .btn.ghost {
+        background: transparent;
+        color: #fff;
+      }
+      .band .tel-big {
+        color: #fff;
+      }
+      .group a {
+        border: 1px solid var(--line);
+        border-top: 3px solid var(--ink);
+        background: #fff;
+      }
+      .group a:hover {
+        transform: none;
+        box-shadow: none;
+        border-color: var(--ink);
+      }
+      .p-hero {
+        background: var(--paper2);
+      }
+      .wcard,
+      .svc article {
+        border: 1px solid var(--line);
+      }
+      .wcard .ph {
+        background: #eef2f4;
+      }
+      @media (max-width: 860px) {
+        .bhero {
+          grid-template-columns: 1fr;
+          min-height: 0;
+        }
+        .bhero .txt {
+          padding: 7vh 6vw 6vh;
+        }
+        .bhero .media {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 12px;
+          padding: 26px 6vw;
+        }
+        .bhero .media dd {
+          font-size: 1.05rem;
+          border-bottom: 0;
+          padding-bottom: 0;
+        }
+        .svc3 {
+          grid-template-columns: 1fr;
+        }
+        .msg {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hd" id="hd">
+      <a class="brand" href="#top"
+        ><img
+          src="data:image/png;base64,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"
+          alt=""
+        /><span><b>フォレスト総建</b><small>FOREST SOUKEN</small></span></a
+      >
+      <nav aria-label="メインメニュー">
+        <button class="menu" type="button" aria-expanded="false" aria-controls="navList">メニュー</button>
+        <ul id="navList">
+          <li><a href="#jisseki">施工実績</a></li>
+          <li><a href="#jigyo">事業内容</a></li>
+          <li><a href="#company">会社案内</a></li>
+          <li><a href="#access">アクセス</a></li>
+          <li><a href="#faq">よくある質問</a></li>
+          <li><a class="cta" href="#otoiawase">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="top">
+      <!-- ===== HERO(試作 案1) ===== -->
+      <section class="bhero" id="story" aria-label="フォレスト総建">
+        <div class="txt">
+          <p class="kicker">造成工事に伴う伐採工事</p>
+          <h1>山の仕事を、<br />工事の入口から。</h1>
+          <p class="lead">
+            道路も、住宅地も、太陽光発電所も。<br />はじまりは、山の伐採から。<br />奈良・広陵町から、近畿一円の現場へ。
+          </p>
+          <div class="acts">
+            <a class="btn" href="#otoiawase">お見積り・ご相談</a>
+            <a class="btn ghost" href="#jisseki">施工実績を見る</a>
+          </div>
+          <p class="tel">お電話<a href="tel:0745583050">0745-58-3050</a></p>
+        </div>
+        <dl class="media">
+          <div>
+            <dt>創業</dt>
+            <dd>1999<small>年</small></dd>
+          </div>
+          <div>
+            <dt>主な実績</dt>
+            <dd>新名神<br />高速道路</dd>
+          </div>
+          <div>
+            <dt>伐った木は</dt>
+            <dd>伊賀林業で<br />チップに</dd>
+          </div>
+        </dl>
+      </section>
+
+      <div class="clients">
+        <b>主な取引先</b>
+        <span>大和ハウス工業(株)</span><span>鹿島建設(株)</span><span>(株)森組</span><span>(株)鴻池組</span>
+        <small>(順不同)</small>
+      </div>
+
+      <section class="sec" id="service">
+        <p class="kicker">SERVICE</p>
+        <h2 class="h2">調査から搬出まで、<br />一貫して。</h2>
+        <div class="svc3">
+          <a href="#jigyo"
+            ><span class="no">01</span>
+            <h3>伐採工事</h3>
+            <p>高速道路、宅地造成、太陽光発電所などの建設に先立ち、計画区域内の山林を伐採します。</p>
+            <span class="more">詳しく →</span></a
+          >
+          <a href="#jigyo"
+            ><span class="no">02</span>
+            <h3>調査業務</h3>
+            <p>施工に先立つ森林調査・現地調査。樹木の状況と地形を把握し、伐採計画を立てます。</p>
+            <span class="more">詳しく →</span></a
+          >
+          <a href="#jigyo"
+            ><span class="no">03</span>
+            <h3>搬出・リサイクル</h3>
+            <p>伐採木は集材・搬出し、グループの伊賀林業で燃料・資材用のチップに変えます。</p>
+            <span class="more">詳しく →</span></a
+          >
+        </div>
+      </section>
+
+      <!-- ===== WORKS：実績マップ ===== -->
+      <section class="sec" id="works">
+        <p class="kicker">WORKS</p>
+        <h2 class="h2">1999年から、<br />近畿一円の山へ。</h2>
+        <p class="lead">
+          新名神高速道路の工事から、太陽光発電所、公共施設まで。△をタップすると工事の概要が見られます。点線は、伐った木がグループの伊賀林業へ運ばれチップになる流れです。
+        </p>
+        <div class="works-grid">
+          <div class="mapbox">
+            <svg
+              id="kinki"
+              viewBox="0 0 1000 655"
+              role="img"
+              aria-label="近畿地方の地図に、主な施工実績の場所を示した図"
+            ></svg>
+            <div class="legend">
+              <span
+                ><svg width="14" height="12">
+                  <path d="M7 1 L13 11 L1 11 Z" fill="none" stroke="var(--red)" stroke-width="2" /></svg
+                >施工実績</span
+              ><span
+                ><svg width="14" height="14">
+                  <circle cx="7" cy="7" r="5" fill="none" stroke="var(--blue)" stroke-width="2" />
+                  <circle cx="7" cy="7" r="2" fill="var(--blue)" /></svg
+                >本社(広陵町)</span
+              ><span
+                ><svg width="12" height="12"><rect x="2" y="2" width="8" height="8" fill="var(--moss)" /></svg
+                >伊賀林業(チップ化)</span
+              ><span>位置はおおよそです</span>
+            </div>
+          </div>
+          <div>
+            <div class="card" id="wcard" aria-live="polite"></div>
+            <ul class="wlist" id="wlist"></ul>
+            <a class="btn ghost" href="#jisseki" style="margin-top: 18px">実績一覧を見る</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FLOW：工程表 ===== -->
+      <section class="sec alt" id="flow">
+        <p class="kicker">FLOW</p>
+        <h2 class="h2">調べて、伐って、運び出す。<br />その先は、伊賀林業へ。</h2>
+        <p class="lead">
+          工事の入口にあたる山の仕事を、調査から一貫して担います。伐った木は捨てずに、グループの伊賀林業で燃料や資材のチップに変えます。
+        </p>
+        <div class="gantt" id="gantt">
+          <table>
+            <thead>
+              <tr>
+                <th>工程</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th><b>調査</b><small>現地踏査・樹木調査。地形と木の状況を把握して、伐採の計画を立てます。</small></th>
+                <td class="lane" colspan="8">
+                  <span class="bar" style="left: 0; width: 25%; transition-delay: 0.1s"></span
+                  ><span class="ms" style="left: 25%"></span>
+                </td>
+              </tr>
+              <tr>
+                <th><b>伐採</b><small>重機と有資格者で、高速道路や宅地造成の山林を安全に伐採します。</small></th>
+                <td class="lane" colspan="8">
+                  <span class="bar red" style="left: 20%; width: 52%; transition-delay: 0.35s"></span>
+                </td>
+              </tr>
+              <tr>
+                <th><b>搬出・運搬</b><small>伐採木を集め、現場から運び出します。</small></th>
+                <td class="lane" colspan="8">
+                  <span class="bar" style="left: 32%; width: 50%; transition-delay: 0.6s"></span>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <b>チップ化</b><small>グループの工場で、燃料・資材用のチップに。</small
+                  ><span class="who">伊賀林業</span>
+                </th>
+                <td class="lane" colspan="8">
+                  <span class="bar iga" style="left: 45%; width: 55%; transition-delay: 0.85s"></span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="gnote">※ 工程の長さはイメージです。現場の規模によって変わります。</p>
+      </section>
+
+      <!-- ===== MESSAGE ===== -->
+      <section class="sec" id="message">
+        <div class="msg">
+          <p class="vq">伐ることに、<br />責任を持つ。</p>
+          <div>
+            <p class="kicker">MESSAGE</p>
+            <p style="margin-top: 18px">
+              道路も、住宅も、太陽光発電所も。そのはじまりには、必ず「山を拓く」仕事があります。
+            </p>
+            <p>
+              私たちは1999年の創業以来、奈良から近畿一円の山々と向き合ってきました。伐ることに責任を持つからこそ、伐った木の行き先にもこだわります。グループの伊賀林業と連携し、伐採木をチップとして次の使い道へつなげています。
+            </p>
+            <p class="sig">フォレスト総建株式会社<br />代表取締役　岡田 憲博</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== COMPANY ===== -->
+      <section class="sec alt" id="company">
+        <p class="kicker">COMPANY</p>
+        <h2 class="h2">奈良・広陵町から。</h2>
+        <div class="co">
+          <dl>
+            <dt>商号</dt>
+            <dd>フォレスト総建株式会社</dd>
+            <dt>代表者</dt>
+            <dd>代表取締役　岡田 憲博</dd>
+            <dt>所在地</dt>
+            <dd>〒635-0817<br />奈良県北葛城郡広陵町寺戸550-3</dd>
+            <dt>電話／FAX</dt>
+            <dd>0745-58-3050／0745-58-3051</dd>
+            <dt>創業</dt>
+            <dd>1999年8月</dd>
+            <dt>資本金</dt>
+            <dd>4,000万円</dd>
+            <dt>事業内容</dt>
+            <dd>林業土木(造成工事に伴う伐採工事)、調査業務</dd>
+            <dt>主な取引先</dt>
+            <dd>大和ハウス工業(株)、鹿島建設(株)、(株)森組、(株)鴻池組(順不同)</dd>
+            <dt>グループ</dt>
+            <dd>ECPGROUP(株式会社ネクサス、株式会社ルプラス、株式会社伊賀林業)</dd>
+          </dl>
+          <ol class="hist">
+            <li><span class="y">1999.08</span><span>フォレスト総建有限会社 設立</span></li>
+            <li><span class="y">2002.09</span><span>フォレスト総建株式会社へ移行</span></li>
+            <li><span class="y">2008.07</span><span>現本社へ移転</span></li>
+            <li><span class="y">2009</span><span>株式会社伊賀林業が関連会社に</span></li>
+            <li><span class="y">2023.09</span><span>株式会社ネクサスが関連会社に</span></li>
+            <li><span class="y">2023.11</span><span>資本金4,000万円に増資</span></li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ===== RECRUIT / CONTACT ===== -->
+      <section class="band" id="recruit">
+        <div>
+          <p class="kicker">RECRUIT</p>
+          <h3>山の仕事を、<br />いちから。</h3>
+          <p>採用情報は、ECPGROUPの採用ページでまとめてご案内しています。</p>
+          <a class="btn" href="http://ecp-group.jp/" target="_blank" rel="noopener">ECPGROUPの採用ページへ</a>
+        </div>
+        <div id="contact">
+          <p class="kicker">CONTACT</p>
+          <h3>伐採のご相談は、<br />お電話でも。</h3>
+          <a class="tel-big" href="tel:0745583050">0745-58-3050</a>
+          <p>平日 8:00〜17:00(土日祝休み)／FAX 0745-58-3051</p>
+          <a class="btn ghost" href="#otoiawase">フォームで相談する</a>
+        </div>
+      </section>
+
+      <section class="sec" id="group">
+        <p class="kicker">GROUP</p>
+        <h2 class="h2">ECPGROUPの一員として。</h2>
+        <div class="group">
+          <a href="http://ecp-group.jp/" target="_blank" rel="noopener"
+            ><span class="rel">伐った木の行き先</span><b>株式会社伊賀林業</b
+            ><small>木くずのリサイクル工場。伐採木をタブグラインダーでチップに変えます。</small></a
+          >
+          <a href="http://ecp-group.jp/" target="_blank" rel="noopener"
+            ><span class="rel">拓いた後の土地づくり</span><b>株式会社ネクサス</b
+            ><small>インフラ整備から不動産活用まで。道と街をつくります。</small></a
+          >
+          <a href="http://ecp-group.jp/" target="_blank" rel="noopener"
+            ><span class="rel">工事の数字を支える</span><b>株式会社ルプラス</b
+            ><small>建設積算のスペシャリスト。</small></a
+          >
+        </div>
+      </section>
+    </main>
+
+    <!-- ===================== 内部ページ ===================== -->
+    <main class="page" id="page-jisseki" data-title="施工実績" hidden>
+      <header class="p-hero">
+        <p class="crumb"><a href="#top">トップ</a> / 施工実績</p>
+        <p class="kicker">WORKS</p>
+        <h1 class="p-h1">施工実績</h1>
+        <p class="lead">
+          高速道路、太陽光発電所、宅地造成、公共施設。近畿一円で、工事の入口となる山の伐採を担ってきました。
+        </p>
+      </header>
+      <section class="p-sec">
+        <div class="wgrid" id="wgrid"></div>
+        <p class="pnote"><span class="tbd">要確認</span>工事ごとの写真・規模(伐採面積など)・発注者名の掲載可否</p>
+      </section>
+    </main>
+
+    <main class="page" id="page-jigyo" data-title="事業内容" hidden>
+      <header class="p-hero">
+        <p class="crumb"><a href="#top">トップ</a> / 事業内容</p>
+        <p class="kicker">SERVICE</p>
+        <h1 class="p-h1">山の仕事を、<br />工事の入口から。</h1>
+        <p class="lead">
+          造成工事に伴う山林の伐採を中心に、調査から伐採木の搬出まで一貫して担います。伐った木は、グループの伊賀林業でチップに。
+        </p>
+      </header>
+      <section class="p-sec">
+        <div class="svc">
+          <article>
+            <span class="no">01</span>
+            <h2>伐採工事</h2>
+            <p>
+              高速道路、宅地造成、太陽光発電所などの建設に先立ち、計画区域内の山林を伐採します。重機と有資格者で、大規模な現場にも対応します。
+            </p>
+            <dl class="kv">
+              <dt>対応できる規模</dt>
+              <dd><span class="tbd">要確認</span></dd>
+              <dt>主な重機</dt>
+              <dd><span class="tbd">要確認</span></dd>
+            </dl>
+          </article>
+          <article>
+            <span class="no">02</span>
+            <h2>特殊伐採</h2>
+            <p>住宅や電線の近くなど、重機が入れない場所や、倒す方向に制約がある木の伐採。</p>
+            <dl class="kv">
+              <dt>対応の有無・方法</dt>
+              <dd><span class="tbd">要確認</span>(高所作業車・ロープ作業など)</dd>
+            </dl>
+          </article>
+          <article>
+            <span class="no">03</span>
+            <h2>調査業務</h2>
+            <p>施工に先立つ森林調査・現地調査。樹木の状況と地形を把握し、伐採計画を立てます。</p>
+            <dl class="kv">
+              <dt>具体的な内容</dt>
+              <dd><span class="tbd">要確認</span>(毎木調査、境界確認、測量など)</dd>
+            </dl>
+          </article>
+          <article>
+            <span class="no">04</span>
+            <h2>伐採木の搬出・リサイクル</h2>
+            <p>伐採木は集材・搬出し、グループの伊賀林業(三重県伊賀市)で燃料・資材用のチップに変えます。</p>
+            <dl class="kv">
+              <dt>運搬の許可</dt>
+              <dd><span class="tbd">要確認</span>(自社運搬か、伊賀林業が収集運搬か)</dd>
+            </dl>
+          </article>
+        </div>
+      </section>
+      <section class="p-sec alt2">
+        <h2 class="p-h2">対応エリア</h2>
+        <p class="body">
+          奈良・大阪・京都・兵庫・滋賀を中心に、近畿一円。<span class="tbd">要確認</span>(三重・和歌山なども対応するか)
+        </p>
+      </section>
+    </main>
+
+    <main class="page" id="page-access" data-title="アクセス" hidden>
+      <header class="p-hero">
+        <p class="crumb"><a href="#top">トップ</a> / アクセス</p>
+        <p class="kicker">ACCESS</p>
+        <h1 class="p-h1">アクセス</h1>
+      </header>
+      <section class="p-sec two">
+        <dl class="kv">
+          <dt>住所</dt>
+          <dd>〒635-0817<br />奈良県北葛城郡広陵町寺戸550-3</dd>
+          <dt>電話</dt>
+          <dd><a href="tel:0745583050">0745-58-3050</a></dd>
+          <dt>FAX</dt>
+          <dd>0745-58-3051</dd>
+          <dt>営業時間</dt>
+          <dd>平日 8:00〜17:00(土日祝休み)<span class="tbd">要確認</span></dd>
+          <dt>お車で</dt>
+          <dd><span class="tbd">要確認</span>(最寄りのIC、駐車場の有無)</dd>
+        </dl>
+        <div>
+          <a
+            class="btn"
+            href="https://www.google.com/maps/search/?api=1&query=%E5%A5%88%E8%89%AF%E7%9C%8C%E5%8C%97%E8%91%9B%E5%9F%8E%E9%83%A1%E5%BA%83%E9%99%B5%E7%94%BA%E5%AF%BA%E6%88%B8550-3"
+            target="_blank"
+            rel="noopener"
+            >Googleマップで開く</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <main class="page" id="page-faq" data-title="よくある質問" hidden>
+      <header class="p-hero">
+        <p class="crumb"><a href="#top">トップ</a> / よくある質問</p>
+        <p class="kicker">FAQ</p>
+        <h1 class="p-h1">よくある質問</h1>
+      </header>
+      <section class="p-sec faq">
+        <details>
+          <summary>どのくらいの規模から依頼できますか？</summary>
+          <div><span class="tbd">要確認</span>(数本の木からでも可か、山林単位か)</div>
+        </details>
+        <details>
+          <summary>個人からの依頼(庭木・宅地の伐採)も受けていますか？</summary>
+          <div><span class="tbd">要確認</span></div>
+        </details>
+        <details>
+          <summary>見積りは無料ですか？現地を見てもらえますか？</summary>
+          <div><span class="tbd">要確認</span></div>
+        </details>
+        <details>
+          <summary>伐った木はどうなりますか？</summary>
+          <div>グループの伊賀林業(三重県伊賀市)で、燃料や資材用のチップにリサイクルしています。</div>
+        </details>
+        <details>
+          <summary>伐根(根っこの撤去)や整地もできますか？</summary>
+          <div><span class="tbd">要確認</span></div>
+        </details>
+        <details>
+          <summary>対応エリアはどこまでですか？</summary>
+          <div>奈良を中心に近畿一円です。<span class="tbd">要確認</span></div>
+        </details>
+      </section>
+    </main>
+
+    <main class="page" id="page-otoiawase" data-title="お問い合わせ" hidden>
+      <header class="p-hero">
+        <p class="crumb"><a href="#top">トップ</a> / お問い合わせ</p>
+        <p class="kicker">CONTACT</p>
+        <h1 class="p-h1">伐採のご相談は、<br />お気軽に。</h1>
+        <p class="lead">お急ぎの方はお電話で(<a href="tel:0745583050">0745-58-3050</a>／平日 8:00〜17:00)。</p>
+      </header>
+      <section class="p-sec">
+        <form class="form" id="inqForm" novalidate>
+          <fieldset class="f-row">
+            <legend>ご用件<em>必須</em></legend>
+            <div class="opts">
+              <label><input type="radio" name="topic" value="伐採工事のご相談" /><span>伐採工事のご相談</span></label>
+              <label><input type="radio" name="topic" value="お見積りの依頼" /><span>お見積りの依頼</span></label>
+              <label><input type="radio" name="topic" value="調査業務" /><span>調査業務</span></label>
+              <label><input type="radio" name="topic" value="その他" /><span>その他</span></label>
+            </div>
+          </fieldset>
+          <div class="f-grid">
+            <label class="f-row"><span>会社名・団体名</span><input name="company" autocomplete="organization" /></label>
+            <label class="f-row"
+              ><span>お名前<em>必須</em></span
+              ><input name="name" autocomplete="name"
+            /></label>
+            <label class="f-row"
+              ><span>電話番号<em>必須</em></span
+              ><input name="tel" type="tel" inputmode="tel" autocomplete="tel"
+            /></label>
+            <label class="f-row"
+              ><span>メールアドレス</span><input name="email" type="email" autocomplete="email"
+            /></label>
+            <label class="f-row"><span>現場の所在地</span><input name="site" placeholder="市区町村まででも可" /></label>
+            <label class="f-row"
+              ><span>おおよその面積・本数</span><input name="size" placeholder="例:約1ha、数十本"
+            /></label>
+          </div>
+          <label class="f-row"><span>内容</span><textarea name="body" rows="5"></textarea></label>
+          <p class="f-err" id="fErr" role="alert"></p>
+          <button class="btn" type="submit">内容を確認する</button>
+        </form>
+        <div class="sent" id="inqSent" hidden>
+          <h2 class="p-h2">送信内容の確認</h2>
+          <dl class="kv" id="sentList"></dl>
+          <p class="body">下のボタンを押すと、この内容が入ったメールが開きます。そのまま送信してください。</p>
+          <a class="btn" id="inqMail" href="mailto:info@forest-sk.co.jp">この内容をメールで送る</a>
+          <button type="button" class="btn ghost" id="inqBack">入力に戻る</button>
+          <p class="pnote"><span class="tbd">要確認</span>宛先 info@forest-sk.co.jp(社員版の記載より)</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <nav style="width: 100%; display: flex; flex-wrap: wrap; gap: 6px 18px; font-weight: 700">
+        <a href="#top">トップ</a><a href="#jisseki">施工実績</a><a href="#jigyo">事業内容</a
+        ><a href="#company">会社案内</a><a href="#access">アクセス</a><a href="#faq">よくある質問</a
+        ><a href="#otoiawase">お問い合わせ</a>
+      </nav>
+      <span>フォレスト総建株式会社|〒635-0817 奈良県北葛城郡広陵町寺戸550-3</span>
+      <span>© ECPGROUP</span>
+    </footer>
+    <script>
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      /* ---------- メニュー ---------- */
+      (() => {
+        const hd = document.getElementById("hd"),
+          b = hd.querySelector(".menu");
+        b.addEventListener("click", () => {
+          const o = hd.classList.toggle("open");
+          b.setAttribute("aria-expanded", o);
+          b.textContent = o ? "閉じる" : "メニュー";
+        });
+        hd.querySelectorAll("nav a").forEach((a) =>
+          a.addEventListener("click", () => {
+            hd.classList.remove("open");
+            b.setAttribute("aria-expanded", "false");
+            b.textContent = "メニュー";
+          }),
+        );
+      })();
+
+      /* ---------- 実績マップ ---------- */
+      (() => {
+        const NS = "http://www.w3.org/2000/svg";
+        const svg = document.getElementById("kinki");
+        const W = 1000,
+          H = 655,
+          LON0 = 135.05,
+          LON1 = 136.35,
+          LAT0 = 34.35,
+          LAT1 = 35.05;
+        const X = (lon) => ((lon - LON0) / (LON1 - LON0)) * W,
+          Y = (lat) => ((LAT1 - lat) / (LAT1 - LAT0)) * H;
+        const WORKS = [
+          {
+            name: "新名神 箕面インターチェンジ中工事",
+            cat: "伐採工事",
+            date: "2023.06",
+            place: "大阪府箕面市",
+            lon: 135.47,
+            lat: 34.86,
+          },
+          {
+            name: "道場 太陽光発電工事",
+            cat: "伐採工事",
+            date: "2023.06",
+            place: "兵庫県神戸市北区",
+            lon: 135.23,
+            lat: 34.87,
+          },
+          { name: "平群町 太陽光", cat: "伐採工事", date: "2021.08", place: "奈良県平群町", lon: 135.7, lat: 34.63 },
+          {
+            name: "富田林市 残土処理場工事",
+            cat: "造成関連",
+            date: "2021.03",
+            place: "大阪府富田林市",
+            lon: 135.6,
+            lat: 34.49,
+          },
+          {
+            name: "メーカーズパーク生駒",
+            cat: "伐採工事",
+            date: "2021.03",
+            place: "奈良県生駒市",
+            lon: 135.73,
+            lat: 34.74,
+          },
+          { name: "新名神 大石工事", cat: "伐採工事", date: "2020.10", place: "滋賀県大津市", lon: 135.94, lat: 34.92 },
+          {
+            name: "奈良市新斎苑 整備工事",
+            cat: "公共施設",
+            date: "2019.11",
+            place: "奈良県奈良市",
+            lon: 135.86,
+            lat: 34.67,
+          },
+          { name: "果樹園 造成工事", cat: "造成工事", date: "2019.10", place: "場所は非公開", lon: null, lat: null },
+        ];
+        const HQ = { lon: 135.76, lat: 34.55 },
+          IGA = { lon: 136.17, lat: 34.76 };
+        let html = "";
+        // 経緯線
+        for (let lo = 135.1; lo < 136.35; lo += 0.1) {
+          const x = X(lo);
+          html += `<line class="grat" x1="${x}" y1="0" x2="${x}" y2="${H}"/>`;
+          if (Math.round(lo * 10) % 2 === 0)
+            html += `<text class="gl" x="${x + 3}" y="${H - 6}">${lo.toFixed(1)}°E</text>`;
+        }
+        for (let la = 34.4; la < 35.05; la += 0.1) {
+          const y = Y(la);
+          html += `<line class="grat" x1="0" y1="${y}" x2="${W}" y2="${y}"/>`;
+          html += `<text class="gl" x="4" y="${y - 4}">${la.toFixed(1)}°N</text>`;
+        }
+        // 府県名(おおよその位置)
+        [
+          ["兵庫", 135.12, 34.98],
+          ["京都", 135.62, 35.0],
+          ["滋賀", 136.02, 35.0],
+          ["大阪", 135.36, 34.6],
+          ["奈良", 135.92, 34.43],
+          ["三重", 136.2, 34.5],
+        ].forEach(([n, lo, la]) => (html += `<text class="pref" x="${X(lo)}" y="${Y(la)}">${n}</text>`));
+        // 伐採木の流れ(伊賀林業へ)
+        WORKS.filter((w) => w.lon).forEach((w) => {
+          const x1 = X(w.lon),
+            y1 = Y(w.lat),
+            x2 = X(IGA.lon),
+            y2 = Y(IGA.lat);
+          const mx = (x1 + x2) / 2,
+            my = Math.min(y1, y2) - 60 - Math.abs(x2 - x1) * 0.08;
+          html += `<path class="flow" d="M${x1} ${y1} Q${mx} ${my} ${x2} ${y2}"/>`;
+        });
+        // 本社・伊賀林業
+        html += `<g class="hq"><circle cx="${X(HQ.lon)}" cy="${Y(HQ.lat)}" r="11"/><circle class="c2" cx="${X(HQ.lon)}" cy="${Y(HQ.lat)}" r="4"/><text class="ml" x="${X(HQ.lon) + 16}" y="${Y(HQ.lat) + 5}" fill="var(--blue)">本社(広陵町)</text></g>`;
+        html += `<g class="iga"><rect x="${X(IGA.lon) - 8}" y="${Y(IGA.lat) - 8}" width="16" height="16"/><text class="ml" x="${X(IGA.lon) - 12}" y="${Y(IGA.lat) + 30}" fill="var(--moss)" text-anchor="middle">伊賀林業</text></g>`;
+        svg.innerHTML = html;
+        // ピン
+        WORKS.forEach((w, i) => {
+          if (!w.lon) return;
+          const x = X(w.lon),
+            y = Y(w.lat);
+          const g = document.createElementNS(NS, "g");
+          g.setAttribute("class", "pin");
+          g.setAttribute("tabindex", "0");
+          g.setAttribute("role", "button");
+          g.setAttribute("aria-label", `${w.name}(${w.place}、${w.date})`);
+          g.innerHTML = `<path class="tri" d="M${x} ${y - 13} L${x + 11} ${y + 7} L${x - 11} ${y + 7} Z"/><circle class="dot" cx="${x}" cy="${y + 1}" r="2.4"/><text class="pl" x="${x + 14}" y="${y + 5}">${w.place.replace(/^(大阪府|兵庫県|奈良県|滋賀県)/, "")}</text>`;
+          g.addEventListener("click", () => show(i));
+          g.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              show(i);
+            }
+          });
+          svg.appendChild(g);
+          w.g = g;
+        });
+        const card = document.getElementById("wcard"),
+          list = document.getElementById("wlist");
+        WORKS.forEach((w, i) => {
+          const li = document.createElement("li");
+          li.innerHTML = `<button type="button" aria-pressed="false"><span class="d">${w.date}</span><span>${w.name}</span><span class="c">${w.cat}</span></button>`;
+          li.querySelector("button").addEventListener("click", () => show(i));
+          list.appendChild(li);
+          w.btn = li.querySelector("button");
+        });
+        function show(i) {
+          const w = WORKS[i];
+          WORKS.forEach((o, k) => {
+            if (o.g) o.g.classList.toggle("on", k === i);
+            o.btn.setAttribute("aria-pressed", k === i ? "true" : "false");
+          });
+          card.innerHTML = `<span class="cat">${w.cat}</span><span class="date">${w.date}</span><h3>${w.name}</h3><p class="place">${w.place}</p><p class="note">現場写真・工事の規模(伐採面積など)を、素材が揃い次第ここに掲載します。</p>`;
+        }
+        show(0);
+      })();
+
+      /* ---------- 工程表の表示アニメ ---------- */
+      (() => {
+        const g = document.getElementById("gantt");
+        if (reduced) {
+          g.classList.add("on");
+          return;
+        }
+        new IntersectionObserver(
+          (es, ob) => {
+            if (es[0].isIntersecting) {
+              g.classList.add("on");
+              ob.disconnect();
+            }
+          },
+          { threshold: 0.35 },
+        ).observe(g);
+      })();
+      /* ---------- 内部ページの切り替え ---------- */
+      (() => {
+        const ROUTES = ["jisseki", "jigyo", "access", "faq", "otoiawase"];
+        const home = document.getElementById("top"),
+          foot = document.querySelector("footer");
+        const base = document.title;
+        function show() {
+          const h = decodeURIComponent(location.hash.slice(1)),
+            r = ROUTES.includes(h) ? h : null;
+          document.querySelectorAll("main.page").forEach((m) => (m.hidden = m.id !== "page-" + r));
+          home.hidden = !!r;
+          document
+            .querySelectorAll(".hd nav a")
+            .forEach((a) =>
+              a.getAttribute("href") === "#" + h && r
+                ? a.setAttribute("aria-current", "page")
+                : a.removeAttribute("aria-current"),
+            );
+          if (r) {
+            document.title = document.getElementById("page-" + r).dataset.title + "|フォレスト総建株式会社";
+            scrollTo(0, 0);
+          } else {
+            document.title = base;
+            const el = h && document.getElementById(h);
+            if (el) {
+              requestAnimationFrame(() => el.scrollIntoView());
+              setTimeout(() => el.scrollIntoView(), 300);
+            } else if (!h) scrollTo(0, 0);
+          }
+          window.dispatchEvent(new Event("scroll"));
+        }
+        addEventListener("hashchange", show);
+        show();
+
+        // 実績カード
+        const W = [
+          ["新名神 箕面インターチェンジ中工事", "伐採工事", "2023.06", "大阪府箕面市"],
+          ["道場 太陽光発電工事", "伐採工事", "2023.06", "兵庫県神戸市北区"],
+          ["平群町 太陽光", "伐採工事", "2021.08", "奈良県平群町"],
+          ["富田林市 残土処理場工事", "造成関連", "2021.03", "大阪府富田林市"],
+          ["メーカーズパーク生駒", "伐採工事", "2021.03", "奈良県生駒市"],
+          ["新名神 大石工事", "伐採工事", "2020.10", "滋賀県大津市"],
+          ["奈良市新斎苑 整備工事", "公共施設", "2019.11", "奈良県奈良市"],
+          ["果樹園 造成工事", "造成工事", "2019.10", "場所は非公開"],
+        ];
+        document.getElementById("wgrid").innerHTML = W.map(
+          (w) =>
+            `<article class="wcard"><div class="ph"><span>写真待ち</span></div><div class="in"><span class="cat">${w[1]}</span><span class="d">${w[2]}</span><h3>${w[0]}</h3><p>${w[3]}</p></div></article>`,
+        ).join("");
+
+        // お問い合わせ
+        const form = document.getElementById("inqForm"),
+          err = document.getElementById("fErr");
+        const L = {
+          topic: "ご用件",
+          company: "会社名",
+          name: "お名前",
+          tel: "電話番号",
+          email: "メール",
+          site: "現場の所在地",
+          size: "面積・本数",
+          body: "内容",
+        };
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const miss = [];
+          if (!form.querySelector("input[name=topic]:checked")) miss.push("ご用件");
+          if (!form.name.value.trim()) miss.push("お名前");
+          if (!form.tel.value.trim()) miss.push("電話番号");
+          if (miss.length) {
+            err.textContent = miss.join("・") + "をご確認ください。";
+            return;
+          }
+          err.textContent = "";
+          const fd = new FormData(form),
+            list = document.getElementById("sentList"),
+            lines = [];
+          list.innerHTML = "";
+          for (const [k, v] of fd.entries()) {
+            if (!String(v).trim()) continue;
+            const dt = document.createElement("dt");
+            dt.textContent = L[k] || k;
+            const dd = document.createElement("dd");
+            dd.textContent = v;
+            list.append(dt, dd);
+            lines.push((L[k] || k) + ":" + v);
+          }
+          document.getElementById("inqMail").href =
+            "mailto:info@forest-sk.co.jp?subject=" +
+            encodeURIComponent("【HPお問い合わせ】" + (fd.get("topic") || "")) +
+            "&body=" +
+            encodeURIComponent(lines.join("\n") + "\n\n(フォレスト総建ホームページのフォームより)");
+          form.hidden = true;
+          document.getElementById("inqSent").hidden = false;
+          scrollTo(0, 0);
+        });
+        document.getElementById("inqBack").addEventListener("click", () => {
+          form.hidden = false;
+          document.getElementById("inqSent").hidden = true;
+        });
+      })();
+    </script>
+  </body>
+</html>
